@@ -1,0 +1,19 @@
+HTTP/1.1 Debug Process:
+============================================================================================================================================================================
+On this part we will workshop for understand basic http service via curl command
+1. Test basic plain text http/1.1 web page by command: curl http://home.sandiego.edu -v --http1.1
+2. Check result from output
+3. Open browser for compare (http://home.sandiego.edu)
+4. Test basic redirect texthttp/1.1 web page by command: curl http://google.com -v --http1.1 -L
+5. Check result from output
+6. Test basic redirect texthttp/1.1 with only header web page by command: curl http://google.com -v --http1.1 -L -I 
+
+HTTP/2 Debug Process:
+============================================================================================================================================================================
+7. Test TLS + HTTP/2 (Https) request by command: curl https://www.google.com -v --http2 --tlsv1.2 -I
+8. Test TLS + HTTP/2 (Https) request by command: curl https://www.scb.co.th -v --http2 --tlsv1.2 -I
+8. Check result for part of TLS and HTTP
+
+HTTP/2 Test on Browser:
+============================================================================================================================================================================
+9. Open url:http://www.http2demo.io/ for test

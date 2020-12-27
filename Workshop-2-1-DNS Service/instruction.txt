@@ -1,0 +1,53 @@
+DNS Basic Query:
+============================================================================================================================================================================
+On this part we will basic query dns record with nslookup and dig
+1. Query dns via nslookup tool: (google.com, scb.co.th, cyberciti.biz)
+  1.1 Basic query: "nslookup -debug google.com 8.8.8.8","nslookup -debug scb.co.th 8.8.8.8","nslookup -debug cyberciti.biz 8.8.8.8"
+  1.2 SOA record query: "nslookup -debug -type=soa google.com 8.8.8.8","nslookup -debug -type=soa scb.co.th 8.8.8.8","nslookup -debug -type=soa cyberciti.biz 8.8.8.8"
+  1.3 NS record query: "nslookup -debug -type=ns google.com 8.8.8.8","nslookup -debug -type=ns scb.co.th 8.8.8.8","nslookup -debug -type=ns cyberciti.biz 8.8.8.8"
+  1.4 A record query: "nslookup -debug -type=a google.com 8.8.8.8","nslookup -debug -type=a scb.co.th 8.8.8.8","nslookup -debug -type=a cyberciti.biz 8.8.8.8"
+  1.5 MX record: "nslookup -debug -type=mx google.com 8.8.8.8","nslookup -debug -type=mx scb.co.th 8.8.8.8","nslookup -debug -type=mx cyberciti.biz 8.8.8.8"
+  1.6 TXT record: "nslookup -debug -type=txt google.com 8.8.8.8","nslookup -debug -type=txt scb.co.th 8.8.8.8","nslookup -debug -type=txt cyberciti.biz 8.8.8.8"
+  1.7 All record query: "nslookup -debug -type=any google.com 8.8.8.8","nslookup -debug -type=any google.com 8.8.8.8","nslookup -debug -type=any cyberciti.biz 8.8.8.8"
+
+2. Query dns via dig tools: (google.com, scb.co.th, cyberciti.biz)
+  2.1 Basic query: "dig @8.8.8.8 google.com","dig @8.8.8.8 scb.co.th","dig @8.8.8.8 cyberciti.biz"
+  2.2 SOA record query: "dig @8.8.8.8 google.com SOA","dig @8.8.8.8 scb.co.th SOA","dig @8.8.8.8 cyberciti.biz SOA"
+  2.3 NS record query: "dig @8.8.8.8 google.com NS","dig @8.8.8.8 scb.co.th NS","dig @8.8.8.8 cyberciti.biz NS"
+  2.4 A record query: "dig @8.8.8.8 google.com A","dig @8.8.8.8 scb.co.th A","dig @8.8.8.8 cyberciti.biz A"
+  2.5 MX record: "dig @8.8.8.8 google.com MX","dig @8.8.8.8 scb.co.th MX","dig @8.8.8.8 cyberciti.biz MX"
+  2.6 TXT record: "dig @8.8.8.8 google.com TXT","dig @8.8.8.8 scb.co.th TXT","dig @8.8.8.8 cyberciti.biz TXT"
+  2.7 All record query: "dig @8.8.8.8 google.com ANY","dig @8.8.8.8 scb.co.th ANY","dig @8.8.8.8 cyberciti.biz ANY"
+
+DNSSEC Query
+============================================================================================================================================================================
+On this part we will enhance security for query dns record by dnssec operation
+3. Check domain name for Deligation of Signing (DS):(google.com, scb.co.th, cyberciti.biz)
+  3.1 Check dnssec enable for domain name ".com" by command: dig DS com
+  3.2 Check dnssec enable for domain name ".th" by command: dig DS th
+  3.3 Check dnssec enable for domain name "co.th" by command: dig DS co.th
+  3.4 Check dnssec enable for domain name "scb.co.th" by command: dig DS scb.co.th
+  3.5 Check dnssec enable for domain name "google.com" by command: dig DS google.com
+  3.6 Check dnssec enable for domain name "cyberciti.biz" by command: dig DS cyberciti.biz
+
+4. Check domain name for DNSKey (Public key) (google.com, scb.co.th, cyberciti.biz)
+  4.1 Check dnssec enable for domain name ".com" by command: dig @8.8.8.8 DNSKEY com
+  4.2 Check dnssec enable for domain name ".th" by command: dig @8.8.8.8 DNSKEY th
+  4.3 Check dnssec enable for domain name "co.th" by command: dig @8.8.8.8 DNSKEY co.th
+  4.4 Check dnssec enable for domain name "scb.co.th" by command: dig @8.8.8.8 DNSKEY scb.co.th
+  4.5 Check dnssec enable for domain name "google.com" by command: dig @8.8.8.8 DNSKEY google.com
+  4.6 Check dnssec enable for domain name "cyberciti.biz" by command: dig @8.8.8.8 DNSKEY cyberciti.biz
+
+5. Test query dns record with DNSSEC option by command:
+  5.1 Query domain google.com by command: "dig @8.8.8.8 +dnssec google.com"  ==> Look output for "ad (authorize answer)" and "RRSIG (RRset Signature)"
+  5.2 Query domain scb.co.th by command: "dig @8.8.8.8 +dnssec scb.co.th" ==> Look output for "ad (authorize answer)" and "RRSIG (RRset Signature)"
+  5.3 Query domain cyberciti.biz by command: "dig @8.8.8.8 +dnssec cyberciti.biz"   ==> Look output for "ad (authorize answer)" and "RRSIG (RRset Signature)"
+  5.4 Open url: "https://dnssec-analyzer.verisignlabs.com/" for check dnssec record
+  
+DNS Root Hint
+============================================================================================================================================================================
+On this part we will debug process for dns client for check sequential of dns process (Root server - Top domain - Auhtorize server)
+6. Test query dns record with debug tracing query by command:
+ 6.1 Query for domain google.com by command: dig @8.8.8.8 +trace google.com
+ 6.2 Query for domain scb.co.th by command: dig @8.8.8.8 +trace scb.co.th
+ 6.3 Query for domain cyberciti.biz by command: dig @8.8.8.8 +trace cyberciti.biz

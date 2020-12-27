@@ -1,0 +1,11 @@
+Connection to Cloud
+============================================================================================================================================================================
+1. Check GoogleSheet for check information about your machine and your "docker_lab" (For MAC OS X) or "docker_lab.ppk" (For Windows)
+2. Check Document for connect to your AWS
+3. Check brief ip address (both ipv4 and ipv6) by command: ip -br -c addr show ==> Record your ip address on lab sheet
+4. Check brief mac address and link status by command: ip -br -c link show ==> Record your mac address on lab sheet
+5. Check full ip address information by command: ip addr show (or ip a) (Obsolete command: ifconfig -a)
+6. Check route table by command: ip r (Obsolete command: netstat -rn)
+7. Check arp table by command: ip neigh (Obsolete command: arp -a)
+8. Check all connection from other device to host by command: ss -t -u -a -n (Obsolete command: netstat -t -u -n -a)
+9. Check public ip address of machine by command: curl ifconfig.co ==> Record your public ip address on lab sheet

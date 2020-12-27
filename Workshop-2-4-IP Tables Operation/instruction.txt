@@ -1,0 +1,26 @@
+IPTables Operation
+============================================================================================================================================================================
+On this part we will workshop for configure iptables and test connection between client and server (Check on your control sheet and Record public ip address of server and client)
+1. (Server/Client) Install nmap utility for start workshop by command: sudo apt-get update && sudo apt-get install -y nmap
+2. (Server) Check existing iptables configuation by command: sudo iptables -L
+3. (Server) Apply standard iptables and hostname on /etc/hosts by command below:
+    sudo sed -i "s/127.0.0.1 localhost/127.0.0.1 localhost $HOSTNAME/g" /etc/hosts
+    sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+    sudo iptables -P INPUT DROP
+    sudo iptables -L
+4. (Server) Run command ncat for listening on port 20000 by command: ncat -l 20000
+5. (Client) Test connection via http to server by command: curl http://<Public IP of Server>:20000 -v
+6. (Server) Add iptables rule for accept connection (chain input: destination port 20000, chain output: source port 20000) by command below:
+    sudo iptables -L
+    sudo iptables -I INPUT 1 -p tcp --dport 20000 -m state --state NEW,ESTABLISHED -j ACCEPT
+    sudo iptables -A OUTPUT -p tcp --sport 20000 -m state --state ESTABLISHED -j ACCEPT
+    sudo iptables -L
+7. (Server) Run command ncat for listening on port 20000 by command: ncat -l 20000
+8. (Client) Test connection via http to server by command: curl http://<Public IP of Server>:20000 -v
+9. (Server) Remove iptables for test purpose as command below:
+    sudo iptables -L
+    sudo iptables -P INPUT ACCEPT
+    sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
+    sudo iptables -D INPUT -p tcp --dport 20000 -m state --state  NEW,ESTABLISHED -j ACCEPT
+    sudo iptables -D OUTPUT -p tcp --sport 20000 -m state --state ESTABLISHED -j ACCEPT
+    sudo iptables -L

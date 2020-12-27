@@ -1,0 +1,108 @@
+WebSocket Test Drive
+============================================================================================================================================================================
+On this part we will workshop for compare traffic between general http and websocket traffic
+1. (Terminal2) Open new putty/terminal and dump packet for http traffic by command: sudo tcpdump -enni eth0 -vvvs 1024 port 80
+2. (Terminal1) Test basic plain text http/1.1 web page by command: curl http://www.google.com -v --http1.1 -I
+3. (Terminal1/2) Check result from output/tcpdump and 'Ctrl+C' for cancel dump
+4. (Terminal2) Dump packet for http traffic by command: sudo tcpdump -enni eth0 -vvvs 1024 port 80
+5. (Terminal1) Test websocket web page by command: 
+    curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Host: echo.websocket.org" -H "Origin: http://www.websocket.org" http://echo.websocket.org -v --http1.1
+6. (Terminal1/2) Check result from output/tcpdump and 'Ctrl+C' for cancel dump
+7. Compare result from no.3 and no.6 for length on header
+
+============================================================================================================================================================================
+Example output from no.3
+============================================================================================================================================================================
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 1024 bytes
+08:14:03.721127 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 74: (tos 0x0, ttl 64, id 56186, offset 0, flags [DF], proto TCP (6), length 60)
+    10.21.2.22.41014 > 172.217.194.105.80: Flags [S], cksum 0x7b9c (incorrect -> 0x2952), seq 2323532782, win 62727, options [mss 8961,sackOK,TS val 204606918 ecr 0,nop,wscale 7], length 0
+08:14:03.723905 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 74: (tos 0x0, ttl 36, id 48925, offset 0, flags [none], proto TCP (6), length 60)
+    172.217.194.105.80 > 10.21.2.22.41014: Flags [S.], cksum 0xfb66 (correct), seq 1331457090, ack 2323532783, win 65535, options [mss 1430,sackOK,TS val 4012479875 ecr 204606918,nop,wscale 8], length 0
+08:14:03.723923 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 56187, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.41014 > 172.217.194.105.80: Flags [.], cksum 0x7b94 (incorrect -> 0x2828), seq 1, ack 1, win 491, options [nop,nop,TS val 204606921 ecr 4012479875], length 0
+08:14:03.724200 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 145: (tos 0x0, ttl 64, id 56188, offset 0, flags [DF], proto TCP (6), length 131)
+    10.21.2.22.41014 > 172.217.194.105.80: Flags [P.], cksum 0x7be3 (incorrect -> 0x29fa), seq 1:80, ack 1, win 491, options [nop,nop,TS val 204606921 ecr 4012479875], length 79: HTTP, length: 79
+	HEAD / HTTP/1.1
+	Host: www.google.com
+	User-Agent: curl/7.58.0
+	Accept: */*
+	
+08:14:03.726716 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 36, id 48926, offset 0, flags [none], proto TCP (6), length 52)
+    172.217.194.105.80 > 10.21.2.22.41014: Flags [.], cksum 0x28c1 (correct), seq 1, ack 80, win 256, options [nop,nop,TS val 4012479878 ecr 204606921], length 0
+08:14:03.732605 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 770: (tos 0x0, ttl 51, id 48931, offset 0, flags [none], proto TCP (6), length 756)
+    172.217.194.105.80 > 10.21.2.22.41014: Flags [P.], cksum 0x1c93 (correct), seq 1:705, ack 80, win 256, options [nop,nop,TS val 4012479884 ecr 204606921], length 704: HTTP, length: 704
+	HTTP/1.1 200 OK
+	Content-Type: text/html; charset=ISO-8859-1
+	P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+	Date: Sun, 27 Dec 2020 08:14:03 GMT
+	Server: gws
+	X-XSS-Protection: 0
+	X-Frame-Options: SAMEORIGIN
+	Transfer-Encoding: chunked
+	Expires: Sun, 27 Dec 2020 08:14:03 GMT
+	Cache-Control: private
+	Set-Cookie: 1P_JAR=2020-12-27-08; expires=Tue, 26-Jan-2021 08:14:03 GMT; path=/; domain=.google.com; Secure
+	Set-Cookie: NID=205=OEnEBFf19wiaHmda_OmJjbQO0FSi0FcplFazZJHiHVhpxY1js4Ix85oLzafRGXrWsNrE7Z7iIjfeKuvc7Wtyxs2fvtYBu09IQ-1eIbnhAUoI3Jkl0r4CeiMErVB2hZBphTsDYK0fn985q3H6-uyDoAgdfmlm5NA8bLbHH-HZnzk; expires=Mon, 28-Jun-2021 08:14:03 GMT; path=/; domain=.google.com; HttpOnly
+	
+08:14:03.732616 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 56189, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.41014 > 172.217.194.105.80: Flags [.], cksum 0x7b94 (incorrect -> 0x250d), seq 80, ack 705, win 486, options [nop,nop,TS val 204606929 ecr 4012479884], length 0
+08:14:03.733575 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 56190, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.41014 > 172.217.194.105.80: Flags [F.], cksum 0x7b94 (incorrect -> 0x250b), seq 80, ack 705, win 486, options [nop,nop,TS val 204606930 ecr 4012479884], length 0
+08:14:03.735949 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 51, id 48935, offset 0, flags [none], proto TCP (6), length 52)
+    172.217.194.105.80 > 10.21.2.22.41014: Flags [F.], cksum 0x25ed (correct), seq 705, ack 81, win 256, options [nop,nop,TS val 4012479887 ecr 204606930], length 0
+08:14:03.735960 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 56191, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.41014 > 172.217.194.105.80: Flags [.], cksum 0x7b94 (incorrect -> 0x2504), seq 81, ack 706, win 486, options [nop,nop,TS val 204606933 ecr 4012479887], length 0
+^C
+10 packets captured
+10 packets received by filter
+0 packets dropped by kernel
+
+
+============================================================================================================================================================================
+Example output from no.6
+============================================================================================================================================================================
+ubuntu@ip-10-21-2-22:~$ sudo tcpdump -enni eth0 -vvvs 1024 port 80
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 1024 bytes
+08:17:17.545276 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 59804, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.38640 > 174.129.224.73.80: Flags [F.], cksum 0x9b1c (incorrect -> 0x3d92), seq 1880569919, ack 1842471485, win 487, options [nop,nop,TS val 1943492979 ecr 77740730], length 0
+08:17:17.789478 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 43, id 58690, offset 0, flags [DF], proto TCP (6), length 52)
+    174.129.224.73.80 > 10.21.2.22.38640: Flags [F.], cksum 0x388e (correct), seq 1, ack 1, win 219, options [nop,nop,TS val 77742281 ecr 1943492979], length 0
+08:17:17.789514 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 59805, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.38640 > 174.129.224.73.80: Flags [.], cksum 0x9b1c (incorrect -> 0x368e), seq 1, ack 2, win 487, options [nop,nop,TS val 1943493223 ecr 77742281], length 0
+08:17:18.952620 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 74: (tos 0x0, ttl 64, id 20520, offset 0, flags [DF], proto TCP (6), length 60)
+    10.21.2.22.38642 > 174.129.224.73.80: Flags [S], cksum 0x9b24 (incorrect -> 0xe6ef), seq 2949683688, win 62727, options [mss 8961,sackOK,TS val 1943494386 ecr 0,nop,wscale 7], length 0
+08:17:19.196243 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 74: (tos 0x0, ttl 43, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    174.129.224.73.80 > 10.21.2.22.38642: Flags [S.], cksum 0x9bdf (correct), seq 2332107433, ack 2949683689, win 26847, options [mss 1460,sackOK,TS val 77742632 ecr 1943494386,nop,wscale 7], length 0
+08:17:19.196283 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 20521, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.38642 > 174.129.224.73.80: Flags [.], cksum 0x9b1c (incorrect -> 0x30ac), seq 1, ack 1, win 491, options [nop,nop,TS val 1943494630 ecr 77742632], length 0
+08:17:19.196782 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 223: (tos 0x0, ttl 64, id 20522, offset 0, flags [DF], proto TCP (6), length 209)
+    10.21.2.22.38642 > 174.129.224.73.80: Flags [P.], cksum 0x9bb9 (incorrect -> 0xefb1), seq 1:158, ack 1, win 491, options [nop,nop,TS val 1943494630 ecr 77742632], length 157: HTTP, length: 157
+	GET / HTTP/1.1
+	Host: echo.websocket.org
+	User-Agent: curl/7.58.0
+	Accept: */*
+	Connection: Upgrade
+	Upgrade: websocket
+	Origin: http://www.websocket.org
+	
+08:17:19.440441 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 43, id 24783, offset 0, flags [DF], proto TCP (6), length 52)
+    174.129.224.73.80 > 10.21.2.22.38642: Flags [.], cksum 0x30e2 (correct), seq 1, ack 158, win 219, options [nop,nop,TS val 77742693 ecr 1943494630], length 0
+08:17:19.440903 06:4d:1e:bf:fe:8e > 06:36:ae:aa:e3:78, ethertype IPv4 (0x0800), length 646: (tos 0x0, ttl 43, id 24784, offset 0, flags [DF], proto TCP (6), length 632)
+    174.129.224.73.80 > 10.21.2.22.38642: Flags [P.], cksum 0xdc8d (correct), seq 1:581, ack 158, win 219, options [nop,nop,TS val 77742694 ecr 1943494630], length 580: HTTP, length: 580
+	HTTP/1.1 101 Web Socket Protocol Handshake
+	Access-Control-Allow-Credentials: true
+	Access-Control-Allow-Headers: content-type
+	Access-Control-Allow-Headers: authorization
+	Access-Control-Allow-Headers: x-websocket-extensions
+	Access-Control-Allow-Headers: x-websocket-version
+	Access-Control-Allow-Headers: x-websocket-protocol
+	Access-Control-Allow-Origin: http://www.websocket.org
+	Connection: Upgrade
+	Date: Sun, 27 Dec 2020 08:17:07 GMT
+	Server: Kaazing Gateway
+	Upgrade: WebSocket
+	WebSocket-Location: ws://echo.websocket.org/
+	WebSocket-Origin: http://www.websocket.org
+	
+08:17:19.440914 06:36:ae:aa:e3:78 > 06:4d:1e:bf:fe:8e, ethertype IPv4 (0x0800), length 66: (tos 0x0, ttl 64, id 20523, offset 0, flags [DF], proto TCP (6), length 52)
+    10.21.2.22.38642 > 174.129.224.73.80: Flags [.], cksum 0x9b1c (incorrect -> 0x2c9c), seq 158, ack 581, win 487, options [nop,nop,TS val 1943494875 ecr 77742694], length 0

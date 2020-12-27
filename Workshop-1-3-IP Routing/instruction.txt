@@ -1,0 +1,6 @@
+IP Routing Operation:
+============================================================================================================================================================================
+1. Check your ip address, subnet mark by command: ip addr
+2. Check route table by command: ip r
+3. Try legacy command by: netstat -rn
+4. Check ip address from name resolve of www.google.com by command: dig www.google.com ==> Record IP Address
