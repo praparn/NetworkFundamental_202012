@@ -1,8 +1,8 @@
 TCP Flow Control
 ============================================================================================================================================================================
-1. (Terminal1) Dump packet to destination 1.1.1.1 by command: sudo tcpdump -enni eth0 host 1.1.1.1
+1. (Terminal1) Dump packet to destination 1.1.1.1 by command: sudo tcpdump -enni ens5 host 1.1.1.1
 2. (Terminal2) Open another putty/terminal and test via curl command for establish http connection: curl http://1.1.1.1 -v
 3. (Terminal1) Check output on screen and 'Ctrl + C' for end tcpdump
-4. (Terminal1) Dupp packet to destination 1.1.1.1 with full contain detail by command: udo tcpdump -X -enni eth0 host 1.1.1.1
+4. (Terminal1) Dupp packet to destination 1.1.1.1 with full contain detail by command: sudo tcpdump -X -enni ens5 host 1.1.1.1
 5. (Terminal2) Open another putty/terminal and test via curl command for establish http connection: curl http://1.1.1.1 -v
 6. (Terminal1) Check output on screen and 'Ctrl + C' for end tcpdump

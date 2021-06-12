@@ -1,5 +1,5 @@
 UDP Flow Control
 ============================================================================================================================================================================
-1. (Terminal1) Dump packet to destination 1.1.1.1 by command: sudo tcpdump -X -enni eth0 host 1.1.1.1 and udp
+1. (Terminal1) Dump packet to destination 1.1.1.1 by command: sudo tcpdump -X -enni ens5 host 1.1.1.1 and udp
 2. (Terminal2) Open another putty/terminal and check dns name for 1.1.1.1 by command: dig @1.1.1.1 www.google.com 
 3. (Terminal1) Check output on screen and 'Ctrl + C' for end tcpdump

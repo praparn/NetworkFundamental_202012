@@ -4,12 +4,12 @@ ARP/IP Operation Instruction:
 1. Check private ip address of yourself and co-worker with control-sheet
 2. (Terminal1) Clear arp table on machine by command: sudo ip -s -s neigh flush all
 3. (Terminal1) Check arp table on machine by command: ip neigh
-4. (Terminal1) Dump packet by command: sudo tcpdump -enni eth0 arp -c 4
-5. (Terminal2) Open another putty/terminal and establish ssh connection by command: ssh ubuntu@<Teacher's IP> -v (Answer: Yes)
+4. (Terminal1) Dump packet by command: sudo tcpdump -enni ens5 arp -c 4
+5. (Terminal2) Open another putty/terminal and establish ssh connection by command: ssh ubuntu@<Teacher's Private IP> -v (Answer: Yes)
 6. (Terminal1) Check result on screen
 7. (Terminal1) Check arp table on machine by command: ip neigh
 ================================ Entire Process with ARP/IP ===================================
 8. (Terminal1) Clear apr table and check again by command: sudo ip -s -s neigh flush all && ip neigh
-9. (Terminal1) Dump packet by focus to destination ip address by command: sudo tcpdump -enni eth0 host <Teacher's IP> or arp -c 100
-10. (Terminal2) Establish ssh connection by command: ssh ubuntu@<ip address of teacher machine> -v
+9. (Terminal1) Dump packet by focus to destination ip address by command: sudo tcpdump -enni ens5 host <Test Machine IP's Private> or arp -c 100
+10. (Terminal2) Establish ssh connection by command: ssh ubuntu@<Test Machine IP's Private> -v
 11. (Terminal1) Check result on screen and 'Ctrl + C' or stop
