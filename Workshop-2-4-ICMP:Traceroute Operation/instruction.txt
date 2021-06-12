@@ -2,7 +2,7 @@ ICMP/TraceRoute Operation
 ============================================================================================================================================================================
 On this part we will workshop for operate with ICMP and TraceRoute from lab computer to target
 1. (Terminal1) Install traceroute by command: sudo apt-get update && sudo apt-get install -y inetutils-traceroute
-2. (Terminal2) Open putty/terminal for dump packet by command: sudo tcpdump -enni eth0 icmp
+2. (Terminal2) Open putty/terminal for dump packet by command: sudo tcpdump -enni ens5 icmp
 3. (Terminal1) Select one of public ip address of "www.google.com" by command: dig @8.8.8.8 www.google.com A ==> Record Target IP Address
 4. (Terminal1) Test ping to public ip address by command: ping -c 10 -i 1 -W 1 <IP Address> ==> Record ttl, packet size, round-trip time
 5. (Terminal2) Check result from tcpdump and restart tcpdump again by 'Ctrl+C' and "sudo tcpdump -enni eth0 icmp"

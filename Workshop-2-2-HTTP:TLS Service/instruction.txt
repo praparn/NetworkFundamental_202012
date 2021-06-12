@@ -10,8 +10,8 @@ On this part we will workshop for understand basic http service via curl command
 
 HTTP/2 Debug Process:
 ============================================================================================================================================================================
-7. Test TLS + HTTP/2 (Https) request by command: curl https://www.google.com -v --http2 --tlsv1.2 -I
-8. Test TLS + HTTP/2 (Https) request by command: curl https://www.scb.co.th -v --http2 --tlsv1.2 -I
+7. Test TLS + HTTP/2 (Https) request by command: curl https://www.google.com -v --http2 -I
+8. Test TLS + HTTP/2 (Https) request by command: curl https://www.scb.co.th -v --http2 -I
 8. Check result for part of TLS and HTTP
 
 HTTP/2 Test on Browser:

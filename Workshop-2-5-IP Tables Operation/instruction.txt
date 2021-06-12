@@ -1,7 +1,7 @@
 IPTables Operation
 ============================================================================================================================================================================
 On this part we will workshop for configure iptables and test connection between client and server (Check on your control sheet and Record public ip address of server and client)
-1. (Server/Client) Install nmap utility for start workshop by command: sudo apt-get update && sudo apt-get install -y nmap
+1. (Server/Client) Install nmap utility for start workshop by command: sudo apt-get update && sudo apt-get install -y nmap ncat
 2. (Server) Check existing iptables configuation by command: sudo iptables -L
 3. (Server) Apply standard iptables and hostname on /etc/hosts by command below:
     sudo sed -i "s/127.0.0.1 localhost/127.0.0.1 localhost $HOSTNAME/g" /etc/hosts

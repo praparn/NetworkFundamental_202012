@@ -1,10 +1,10 @@
 WebSocket Test Drive
 ============================================================================================================================================================================
 On this part we will workshop for compare traffic between general http and websocket traffic
-1. (Terminal2) Open new putty/terminal and dump packet for http traffic by command: sudo tcpdump -enni eth0 -vvvs 1024 port 80
+1. (Terminal2) Open new putty/terminal and dump packet for http traffic by command: sudo tcpdump -enni ens5 -vvvs 1024 port 80
 2. (Terminal1) Test basic plain text http/1.1 web page by command: curl http://www.google.com -v --http1.1 -I
 3. (Terminal1/2) Check result from output/tcpdump and 'Ctrl+C' for cancel dump
-4. (Terminal2) Dump packet for http traffic by command: sudo tcpdump -enni eth0 -vvvs 1024 port 80
+4. (Terminal2) Dump packet for http traffic by command: sudo tcpdump -enni ens5 -vvvs 1024 port 80
 5. (Terminal1) Test websocket web page by command: 
     curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Host: echo.websocket.org" -H "Origin: http://www.websocket.org" http://echo.websocket.org -v --http1.1
 6. (Terminal1/2) Check result from output/tcpdump and 'Ctrl+C' for cancel dump
